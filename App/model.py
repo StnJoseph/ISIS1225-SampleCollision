@@ -25,10 +25,14 @@
  """
 
 
+import time
+import os
+import psutil
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
+from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
 """
@@ -36,6 +40,9 @@ Se define la estructura de un catálogo de libros.
 El catálogo tendrá tres listas, una para libros, otra para autores
 y otra para géneros
 """
+
+# variable global del ID del proceso en el OS
+process_id = os.getpid()
 
 # Construccion de modelos
 
@@ -259,7 +266,6 @@ def addBookTag(catalog, tag):
 # Funciones de consulta
 # ==============================
 
-
 def getBooksByAuthor(catalog, authorname):
     """
     Retorna un autor con sus libros a partir del nombre del autor
@@ -289,6 +295,53 @@ def getBooksByYear(catalog, year):
     if year:
         return me.getValue(year)['books']
     return None
+
+
+def sortBooksByYear(catalog, year, fraction, rank):
+    """
+    retorna una fraccion de la lista de un año ordenada por rating ascendentemente
+    """
+    # toma de tiempo y memoria al inicio del proceso
+    start_time = time.process_time()
+    process_data = psutil.Process(process_id)
+    start_memory = process_data.memory_info().rss
+
+    # recuperar libros en el año apropiado
+    year_mp = mp.get(catalog['years'], year)
+    if year_mp:
+
+        # recuperar la lista de libros
+        books_year = me.getValue(year_mp)["books"]
+
+        # ajustar el tamaño de la muestra segun la fraccion del total de elementos en la lista
+        total_books = lt.size(books_year)
+        sample = int(total_books*fraction)
+        print("Total books in " + str(year) + ":" + str(total_books))
+        print("Books sample size: ", str(sample))
+
+        # ordenando la sublista
+        sub_list = lt.subList(books_year, 1, sample)
+        sorted_list = sa.sort(sub_list, compareratings)
+        ranked_list = lt.subList(sorted_list, 1, rank)
+
+        # toma de tiempo y memoria al final del proceso
+        stop_time = time.process_time()
+        process_data = psutil.Process(process_id)
+        stop_memory = process_data.memory_info().rss
+
+        # calculando la diferencia de tiempo y memoria
+        delta_time_ns = (stop_time - start_time)*1000
+        delta_memory_bits = stop_memory - start_memory
+
+        return ranked_list, delta_time_ns, delta_memory_bits
+    return None, -1.0, -1.0
+
+
+def compareratings(book1, book2):
+    """
+    compara el puntaje promedio de dos libros, devuelve verdadero si el primero es mayor que el segundo
+    """
+    return float(book1['average_rating']) > float(book2['average_rating'])
 
 
 def booksSize(catalog):
