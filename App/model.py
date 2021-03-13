@@ -28,6 +28,8 @@
 import time
 import os
 import psutil
+import tracemalloc
+import gc
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
@@ -301,10 +303,12 @@ def sortBooksByYear(catalog, year, fraction, rank):
     """
     retorna una fraccion de la lista de un año ordenada por rating ascendentemente
     """
+    # inicializa el processo para medir memoria
+    tracemalloc.start()
+
     # toma de tiempo y memoria al inicio del proceso
-    start_time = time.process_time()
-    process_data = psutil.Process(process_id)
-    start_memory = process_data.memory_info().rss
+    start_time = getTime()
+    start_memory = getMemory()
 
     # recuperar libros en el año apropiado
     year_mp = mp.get(catalog['years'], year)
@@ -325,16 +329,42 @@ def sortBooksByYear(catalog, year, fraction, rank):
         ranked_list = lt.subList(sorted_list, 1, rank)
 
         # toma de tiempo y memoria al final del proceso
-        stop_time = time.process_time()
-        process_data = psutil.Process(process_id)
-        stop_memory = process_data.memory_info().rss
+        stop_time = getTime()
+        stop_memory = getMemory()
+        # finaliza el procesos para medir memoria
+        tracemalloc.stop()
 
         # calculando la diferencia de tiempo y memoria
-        delta_time_ns = (stop_time - start_time)*1000
-        delta_memory_bits = stop_memory - start_memory
+        delta_time = stop_time - start_time
+        delta_memory = deltaMemory(start_memory, stop_memory)
 
-        return ranked_list, delta_time_ns, delta_memory_bits
+        return ranked_list, delta_time, delta_memory
     return None, -1.0, -1.0
+
+def getTime():
+    """
+    devuelve el instante tiempo de procesamiento en milisegundos
+    """
+    return time.process_time()*1000
+
+
+def getMemory():
+    """
+    toma una muestra de la memoria alocada en instante de tiempo
+    """
+    return tracemalloc.take_snapshot()
+
+
+def deltaMemory(start_memory, stop_memory):
+    """
+    calcula la diferencia de la memoria alocada dentro del programa en entre dos instantes de tiempo y devuelve el resultado en bytes (ej.: 2100.0 B)
+    """
+    memory_diff = stop_memory.compare_to(start_memory, "filename")
+    delta_memory = 0.0
+
+    for stat in memory_diff:
+        delta_memory = delta_memory + stat.size
+    return delta_memory
 
 
 def compareratings(book1, book2):
