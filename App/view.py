@@ -107,6 +107,7 @@ def printMenu():
     print("3- Consultar los libros de un año")
     print("4- Consultar los libros de un autor")
     print("5- Consultar los Libros por etiqueta")
+    print("6- Ordenar mejores libros de un año")
     print("0- Salir")
 
 
@@ -126,6 +127,7 @@ def loadData(catalog):
     controller.loadData(catalog)
 
 
+cont = None
 # Menu principal
 
 while True:
@@ -158,10 +160,16 @@ while True:
         books = controller.getBooksByTag(cont, label)
         printBooksbyTag(books)
 
-    elif int(inputs[0]) == 2:
-        # TODO: completar modificaciones del laboratorio
-        pass
-
+    elif int(inputs[0]) == 6:
+        number = input("Buscando libros del año?: ")
+        fraction = input("Fraccion de libros en el año? (entre 0.0 a 1.0): ")
+        rank = input("Cuantos libros en el escalafon? (mayor a 0): ")
+        number = int(number)
+        fraction = float(fraction)
+        rank = int(rank)
+        books = controller.sortBooksByYear(cont, number, fraction, rank)
+        printBestBooks(books[0])
+        print("Time [ms]: ", books[1], "Memory [Byte]: ", books[2])
     else:
-        sys.exit(0)
+        sys.exit(0),
 sys.exit(0)

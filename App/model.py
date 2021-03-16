@@ -24,11 +24,14 @@
  * Dario Correal - Version inicial
  """
 
-# TODO: completar modificaciones del laboratorio
+
+import time
+import tracemalloc
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
+from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
 """
@@ -259,7 +262,6 @@ def addBookTag(catalog, tag):
 # Funciones de consulta
 # ==============================
 
-
 def getBooksByAuthor(catalog, authorname):
     """
     Retorna un autor con sus libros a partir del nombre del autor
@@ -291,6 +293,86 @@ def getBooksByYear(catalog, year):
     return None
 
 
+def sortBooksByYear(catalog, year, fraction, rank):
+    """
+    retorna una fraccion de la lista de videos del año ordenada por rating
+    """
+    # inicializa el processo para medir memoria
+    tracemalloc.start()
+    ranked_list = None
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    # toma de tiempo y memoria al inicio del proceso
+    start_time = getTime()
+    start_memory = getMemory()
+
+    # recuperar libros en el año apropiado
+    year_mp = mp.get(catalog['years'], year)
+    if year_mp:
+
+        # recuperar la lista de libros
+        books_year = me.getValue(year_mp)["books"]
+
+        # ajustar la muestra segun la fraccion de elementos en la lista
+        total_books = lt.size(books_year)
+        sample = int(total_books*fraction)
+        print("Total books in " + str(year) + ":" + str(total_books))
+        print("Books sample size: ", str(sample))
+
+        # ordenando la sublista
+        sub_list = lt.subList(books_year, 1, sample)
+        sorted_list = sa.sort(sub_list, compareratings)
+        ranked_list = lt.subList(sorted_list, 1, rank)
+
+        # toma de tiempo y memoria al final del proceso
+        stop_time = getTime()
+        stop_memory = getMemory()
+
+        # calculando la diferencia de tiempo y memoria
+        delta_time = stop_time - start_time
+        delta_memory = deltaMemory(start_memory, stop_memory)
+
+    # finaliza el procesos para medir memoria
+    tracemalloc.stop()
+    return ranked_list, delta_time, delta_memory
+
+
+def getTime():
+    """
+    devuelve el instante tiempo de procesamiento en milisegundos
+    """
+    return time.process_time()*1000
+
+
+def getMemory():
+    """
+    toma una muestra de la memoria alocada en instante de tiempo
+    """
+    return tracemalloc.take_snapshot()
+
+
+def deltaMemory(start_memory, stop_memory):
+    """
+    calcula la diferencia en memoria alocada del programa entre dos
+    instantes de tiempo y devuelve el resultado en bytes (ej.: 2100.0 B)
+    """
+    memory_diff = stop_memory.compare_to(start_memory, "filename")
+    delta_memory = 0.0
+
+    for stat in memory_diff:
+        delta_memory = delta_memory + stat.size
+    return delta_memory
+
+
+def compareratings(book1, book2):
+    """
+    compara el puntaje promedio de dos libros, devuelve verdadero si
+    el primero es mayor que el segundo
+    """
+    return float(book1['average_rating']) > float(book2['average_rating'])
+
+
 def booksSize(catalog):
     """
     Número de libros en el catago
@@ -312,53 +394,9 @@ def tagsSize(catalog):
     return mp.size(catalog['tags'])
 
 
-def sortBooksByYear(catalog, year, fraction, rank):
-    """
-    retorna una parte de la lista de videos del año ordenada por rating
-    """
-    pass
-
-# ==============================
-# Funciones de Experimentacion
-# ==============================
-
-
-def getTime():
-    """
-    devuelve el instante tiempo de procesamiento en milisegundos
-    """
-    # TODO: completar modificaciones del laboratorio
-    pass
-
-
-def getMemory():
-    """
-    toma una muestra de la memoria alocada en instante de tiempo
-    """
-    # TODO: completar modificaciones del laboratorio
-    pass
-
-
-def deltaMemory(start_memory, stop_memory):
-    """
-    calcula la diferencia en memoria alocada del programa entre dos
-    instantes de tiempo y devuelve el resultado en bytes (ej.: 2100.0 B)
-    """
-    # TODO: completar modificaciones del laboratorio
-    pass
-
 # ==============================
 # Funciones de Comparacion
 # ==============================
-
-
-def compareBookRatings(book1, book2):
-    """
-    compara el puntaje promedio de dos libros, devuelve verdadero si
-    el primero es mayor que el segundo
-    """
-    # TODO: completar modificaciones del laboratorio
-    pass
 
 
 def compareBookIds(id1, id2):
