@@ -303,6 +303,9 @@ def sortBooksByYear(catalog, year, fraction, rank):
     """
     # inicializa el processo para medir memoria
     tracemalloc.start()
+    ranked_list = None
+    delta_time = -1.0
+    delta_memory = -1.0
 
     # toma de tiempo y memoria al inicio del proceso
     start_time = getTime()
@@ -330,15 +333,13 @@ def sortBooksByYear(catalog, year, fraction, rank):
         stop_time = getTime()
         stop_memory = getMemory()
 
-        # finaliza el procesos para medir memoria
-        tracemalloc.stop()
-
         # calculando la diferencia de tiempo y memoria
         delta_time = stop_time - start_time
         delta_memory = deltaMemory(start_memory, stop_memory)
 
-        return ranked_list, delta_time, delta_memory
-    return None, -1.0, -1.0
+    # finaliza el procesos para medir memoria
+    tracemalloc.stop()
+    return ranked_list, delta_time, delta_memory
 
 
 def getTime():
