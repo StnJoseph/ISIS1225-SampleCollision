@@ -106,6 +106,7 @@ def printMenu():
     print("3- Consultar los libros de un año")
     print("4- Consultar los libros de un autor")
     print("5- Consultar los Libros por etiqueta")
+    print("6- Ordenar mejores libros de un año")
     print("0- Salir")
 
 
@@ -156,6 +157,11 @@ while True:
         label = input("Etiqueta a buscar: ")
         books = controller.getBooksByTag(cont, label)
         printBooksbyTag(books)
+
+    elif int(inputs[0]) == 2:
+        #TODO: completar instrucciones del laboratorio 7
+        pass
+
     else:
         sys.exit(0)
 sys.exit(0)
