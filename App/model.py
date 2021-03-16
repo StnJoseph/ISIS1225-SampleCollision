@@ -314,12 +314,14 @@ def tagsSize(catalog):
 
 def sortBooksByYear(catalog, year, fraction, rank):
     """
-    retorna una fraccion de la lista de un año ordenada por rating ascendentemente
+    retorna una parte de la lista de videos del año ordenada por rating
     """
+    pass
 
 # ==============================
 # Funciones de Experimentacion
 # ==============================
+
 
 def getTime():
     """
@@ -328,6 +330,7 @@ def getTime():
     # TODO: completar modificaciones del laboratorio
     pass
 
+
 def getMemory():
     """
     toma una muestra de la memoria alocada en instante de tiempo
@@ -335,9 +338,11 @@ def getMemory():
     # TODO: completar modificaciones del laboratorio
     pass
 
+
 def deltaMemory(start_memory, stop_memory):
     """
-    calcula la diferencia de la memoria alocada dentro del programa en entre dos instantes de tiempo y devuelve el resultado en bytes (ej.: 2100.0 B)
+    calcula la diferencia en memoria alocada del programa entre dos
+    instantes de tiempo y devuelve el resultado en bytes (ej.: 2100.0 B)
     """
     # TODO: completar modificaciones del laboratorio
     pass
@@ -345,6 +350,15 @@ def deltaMemory(start_memory, stop_memory):
 # ==============================
 # Funciones de Comparacion
 # ==============================
+
+
+def compareBookRatings(book1, book2):
+    """
+    compara el puntaje promedio de dos libros, devuelve verdadero si
+    el primero es mayor que el segundo
+    """
+    # TODO: completar modificaciones del laboratorio
+    pass
 
 
 def compareBookIds(id1, id2):
