@@ -100,7 +100,6 @@ def printBestBooks(books):
 # Menu de opciones
 
 def printMenu():
-    # TODO: completar modificaciones del laboratorio
     print("Bienvenido")
     print("1- Inicializar Catálogo")
     print("2- Cargar información en el catálogo")
@@ -139,6 +138,7 @@ while True:
         cont = controller.initCatalog()
 
     elif int(inputs[0]) == 2:
+        # TODO: modificaciones para observar las medidas de memoria y tiempo
         print("Cargando información de los archivos ....")
         controller.loadData(cont)
         print('Libros cargados: ' + str(controller.booksSize(cont)))
@@ -146,6 +146,7 @@ while True:
         print('Géneros cargados: ' + str(controller.tagsSize(cont)))
 
     elif int(inputs[0]) == 3:
+        # TODO: modificaciones para observar las medidas de memoria y tiempo
         number = input("Buscando libros del año?: ")
         books = controller.getBooksYear(cont, int(number))
         printBooksbyYear(books)
@@ -162,14 +163,14 @@ while True:
 
     elif int(inputs[0]) == 6:
         number = input("Buscando libros del año?: ")
-        fraction = input("Fraccion de libros en el año? (entre 0.0 a 1.0): ")
+        fraction = input("Fraccion de libros en el año? (entre 0.0 y 1.0): ")
         rank = input("Cuantos libros en el escalafon? (mayor a 0): ")
         number = int(number)
         fraction = float(fraction)
         rank = int(rank)
-        books = controller.sortBooksByYear(cont, number, fraction, rank)
-        printBestBooks(books[0])
-        print("Time [ms]: ", books[1], "Memory [Byte]: ", books[2])
+        answer = controller.sortBooksByYear(cont, number, fraction, rank)
+        printBestBooks(answer[0])
+        print("Time [ms]: ", answer[1], "Memory [Byte]: ", answer[2])
     else:
         sys.exit(0),
 sys.exit(0)

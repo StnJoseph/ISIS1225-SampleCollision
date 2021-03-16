@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
-
+# TODO: modificaciones importar librerias
 import config as cf
 import model
 import csv
@@ -48,6 +48,7 @@ def loadData(catalog):
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
     """
+    # TODO: modificaciones para medir tiempo y memoria usados
     loadBooks(catalog)
     loadTags(catalog)
     loadBooksTags(catalog)
@@ -146,6 +147,7 @@ def getBooksYear(catalog, year):
     Retorna los libros que fueron publicados
     en un año
     """
+    # TODO: modificaciones para medir tiempo y memoria usados
     books = model.getBooksByYear(catalog, year)
     return books
 
