@@ -151,13 +151,16 @@ while True:
         print('Libros cargados: ' + str(controller.booksSize(cont)))
         print('Autores cargados: ' + str(controller.authorsSize(cont)))
         print('Géneros cargados: ' + str(controller.tagsSize(cont)))
-        print("Time [ms]: ", answer[0], "Memory [Byte]: ", answer[1])
+        print("Time [ms]: ", f"{answer[0]:.2f}",
+              "Memory [Byte]: ", f"{answer[1]:.2f}")
 
     elif int(inputs[0]) == 3:
         # TODO: modificaciones para observar las medidas de memoria y tiempo
         number = input("Buscando libros del año?: ")
-        books = controller.getBooksYear(cont, int(number))
-        printBooksbyYear(books)
+        answer = controller.getBooksYear(cont, int(number))
+        printBooksbyYear(answer[0])
+        print("Time [ms]: ", f"{answer[1]:.2f}",
+              "Memory [Byte]: ", f"{answer[2]:.2f}")
 
     elif int(inputs[0]) == 4:
         authorname = input("Nombre del autor a buscar: ")
@@ -178,7 +181,9 @@ while True:
         rank = int(rank)
         answer = controller.sortBooksByYear(cont, number, fraction, rank)
         printBestBooks(answer[0])
-        print("Time [ms]: ", answer[1], "Memory [Byte]: ", answer[2])
+        print("Time [ms]: ", f"{answer[1]:.2f}",
+              "Memory [Byte]: ", f"{answer[2]:.2f}")
+
     else:
         sys.exit(0),
 sys.exit(0)

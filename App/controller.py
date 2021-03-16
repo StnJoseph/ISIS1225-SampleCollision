@@ -175,18 +175,10 @@ def getBooksYear(catalog, year):
     en un año
     """
     # TODO: modificaciones para medir tiempo y memoria usados
-    books = model.getBooksByYear(catalog, year)
-    return books
 
-
-def sortBooksByYear(catalog, year, fraction, rank):
-    """
-    Retorna los libros que fueron publicados
-    en un año ordenados por rating
-    """
     # inicializa el processo para medir memoria
     tracemalloc.start()
-    ranked_books = None
+    books = None
     delta_time = -1.0
     delta_memory = -1.0
 
@@ -194,7 +186,7 @@ def sortBooksByYear(catalog, year, fraction, rank):
     start_time = getTime()
     start_memory = getMemory()
 
-    ranked_books = model.sortBooksByYear(catalog, year, fraction, rank)
+    books = model.getBooksByYear(catalog, year)
 
     # toma de tiempo y memoria al final del proceso
     stop_time = getTime()
@@ -207,8 +199,39 @@ def sortBooksByYear(catalog, year, fraction, rank):
     delta_time = stop_time - start_time
     delta_memory = deltaMemory(start_memory, stop_memory)
 
-    return ranked_books, delta_time, delta_memory
+    return books, delta_time, delta_memory
 
+
+def sortBooksByYear(catalog, year, fraction, rank):
+    """
+    Retorna los libros que fueron publicados
+    en un año ordenados por rating
+    """
+    # inicializa el processo para medir memoria
+    tracemalloc.start()
+    books = None
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    # toma de tiempo y memoria al inicio del proceso
+    start_time = getTime()
+    start_memory = getMemory()
+
+    books = model.sortBooksByYear(catalog, year, fraction, rank)
+
+    # toma de tiempo y memoria al final del proceso
+    stop_time = getTime()
+    stop_memory = getMemory()
+
+    # finaliza el procesos para medir memoria
+    tracemalloc.stop()
+
+    # calculando la diferencia de tiempo y memoria
+    delta_time = stop_time - start_time
+    delta_time = round(delta_time, 3)
+    delta_memory = deltaMemory(start_memory, stop_memory)
+
+    return books, delta_time, delta_memory
 
 # ======================================
 # Funciones para medir tiempo y memoria
@@ -219,7 +242,7 @@ def getTime():
     """
     devuelve el instante tiempo de procesamiento en milisegundos
     """
-    return time.process_time()*1000
+    return float(time.perf_counter()*1000)
 
 
 def getMemory():
