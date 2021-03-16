@@ -25,8 +25,6 @@
  """
 
 
-import time
-import tracemalloc
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
@@ -298,16 +296,6 @@ def sortBooksByYear(catalog, year, fraction, rank):
     """
     retorna una fraccion de la lista de videos del año ordenada por rating
     """
-    # inicializa el processo para medir memoria
-    tracemalloc.start()
-    ranked_list = None
-    delta_time = -1.0
-    delta_memory = -1.0
-
-    # toma de tiempo y memoria al inicio del proceso
-    start_time = getTime()
-    start_memory = getMemory()
-
     # recuperar libros en el año apropiado
     year_mp = mp.get(catalog['years'], year)
     if year_mp:
@@ -326,44 +314,7 @@ def sortBooksByYear(catalog, year, fraction, rank):
         sorted_list = sa.sort(sub_list, compareratings)
         ranked_list = lt.subList(sorted_list, 1, rank)
 
-        # toma de tiempo y memoria al final del proceso
-        stop_time = getTime()
-        stop_memory = getMemory()
-
-        # calculando la diferencia de tiempo y memoria
-        delta_time = stop_time - start_time
-        delta_memory = deltaMemory(start_memory, stop_memory)
-
-    # finaliza el procesos para medir memoria
-    tracemalloc.stop()
-    return ranked_list, delta_time, delta_memory
-
-
-def getTime():
-    """
-    devuelve el instante tiempo de procesamiento en milisegundos
-    """
-    return time.process_time()*1000
-
-
-def getMemory():
-    """
-    toma una muestra de la memoria alocada en instante de tiempo
-    """
-    return tracemalloc.take_snapshot()
-
-
-def deltaMemory(start_memory, stop_memory):
-    """
-    calcula la diferencia en memoria alocada del programa entre dos
-    instantes de tiempo y devuelve el resultado en bytes (ej.: 2100.0 B)
-    """
-    memory_diff = stop_memory.compare_to(start_memory, "filename")
-    delta_memory = 0.0
-
-    for stat in memory_diff:
-        delta_memory = delta_memory + stat.size
-    return delta_memory
+    return ranked_list
 
 
 def compareratings(book1, book2):

@@ -20,6 +20,8 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 # TODO: modificaciones importar librerias
+import time
+import tracemalloc
 import config as cf
 import model
 import csv
@@ -49,9 +51,32 @@ def loadData(catalog):
     estructura de datos
     """
     # TODO: modificaciones para medir tiempo y memoria usados
+
+    # inicializa el processo para medir memoria
+    tracemalloc.start()
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    # toma de tiempo y memoria al inicio del proceso
+    start_time = getTime()
+    start_memory = getMemory()
+
     loadBooks(catalog)
     loadTags(catalog)
     loadBooksTags(catalog)
+
+    # toma de tiempo y memoria al final del proceso
+    stop_time = getTime()
+    stop_memory = getMemory()
+
+    # finaliza el procesos para medir memoria
+    tracemalloc.stop()
+
+    # calculando la diferencia de tiempo y memoria
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+
+    return delta_time, delta_memory
 
 
 def loadBooks(catalog):
@@ -157,5 +182,59 @@ def sortBooksByYear(catalog, year, fraction, rank):
     Retorna los libros que fueron publicados
     en un año ordenados por rating
     """
-    books = model.sortBooksByYear(catalog, year, fraction, rank)
-    return books
+    # inicializa el processo para medir memoria
+    tracemalloc.start()
+    ranked_books = None
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    # toma de tiempo y memoria al inicio del proceso
+    start_time = getTime()
+    start_memory = getMemory()
+
+    ranked_books = model.sortBooksByYear(catalog, year, fraction, rank)
+
+    # toma de tiempo y memoria al final del proceso
+    stop_time = getTime()
+    stop_memory = getMemory()
+
+    # finaliza el procesos para medir memoria
+    tracemalloc.stop()
+
+    # calculando la diferencia de tiempo y memoria
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+
+    return ranked_books, delta_time, delta_memory
+
+
+# =================================================
+# Funciones para mediciones de tiempo y memoria
+# =================================================
+
+
+def getTime():
+    """
+    devuelve el instante tiempo de procesamiento en milisegundos
+    """
+    return time.process_time()*1000
+
+
+def getMemory():
+    """
+    toma una muestra de la memoria alocada en instante de tiempo
+    """
+    return tracemalloc.take_snapshot()
+
+
+def deltaMemory(start_memory, stop_memory):
+    """
+    calcula la diferencia en memoria alocada del programa entre dos
+    instantes de tiempo y devuelve el resultado en bytes (ej.: 2100.0 B)
+    """
+    memory_diff = stop_memory.compare_to(start_memory, "filename")
+    delta_memory = 0.0
+
+    for stat in memory_diff:
+        delta_memory = delta_memory + stat.size
+    return delta_memory

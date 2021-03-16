@@ -140,10 +140,11 @@ while True:
     elif int(inputs[0]) == 2:
         # TODO: modificaciones para observar las medidas de memoria y tiempo
         print("Cargando información de los archivos ....")
-        controller.loadData(cont)
+        answer = controller.loadData(cont)
         print('Libros cargados: ' + str(controller.booksSize(cont)))
         print('Autores cargados: ' + str(controller.authorsSize(cont)))
         print('Géneros cargados: ' + str(controller.tagsSize(cont)))
+        print("Time [ms]: ", answer[0], "Memory [Byte]: ", answer[1])
 
     elif int(inputs[0]) == 3:
         # TODO: modificaciones para observar las medidas de memoria y tiempo
