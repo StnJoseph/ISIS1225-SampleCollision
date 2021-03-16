@@ -24,7 +24,7 @@
  * Dario Correal - Version inicial
  """
 
-
+# TODO: completar modificaciones del laboratorio
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
@@ -311,6 +311,36 @@ def tagsSize(catalog):
     """
     return mp.size(catalog['tags'])
 
+
+def sortBooksByYear(catalog, year, fraction, rank):
+    """
+    retorna una fraccion de la lista de un año ordenada por rating ascendentemente
+    """
+
+# ==============================
+# Funciones de Experimentacion
+# ==============================
+
+def getTime():
+    """
+    devuelve el instante tiempo de procesamiento en milisegundos
+    """
+    # TODO: completar modificaciones del laboratorio
+    pass
+
+def getMemory():
+    """
+    toma una muestra de la memoria alocada en instante de tiempo
+    """
+    # TODO: completar modificaciones del laboratorio
+    pass
+
+def deltaMemory(start_memory, stop_memory):
+    """
+    calcula la diferencia de la memoria alocada dentro del programa en entre dos instantes de tiempo y devuelve el resultado en bytes (ej.: 2100.0 B)
+    """
+    # TODO: completar modificaciones del laboratorio
+    pass
 
 # ==============================
 # Funciones de Comparacion

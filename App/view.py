@@ -100,7 +100,7 @@ def printBestBooks(books):
 # Menu de opciones
 
 def printMenu():
-    #TODO: completar modificaciones del laboratorio
+    # TODO: completar modificaciones del laboratorio
     print("Bienvenido")
     print("1- Inicializar Catálogo")
     print("2- Cargar información en el catálogo")
@@ -159,7 +159,7 @@ while True:
         printBooksbyTag(books)
 
     elif int(inputs[0]) == 2:
-        #TODO: completar modificaciones del laboratorio
+        # TODO: completar modificaciones del laboratorio
         pass
 
     else:
