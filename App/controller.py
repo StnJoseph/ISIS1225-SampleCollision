@@ -148,3 +148,11 @@ def getBooksYear(catalog, year):
     """
     books = model.getBooksByYear(catalog, year)
     return books
+
+
+def sortBooksByYear(catalog, year, fraction, rank):
+    """
+    Retorna los libros que fueron publicados
+    en un año ordenados por rating
+    """
+    #TODO: completar modificaciones del laboratorio
