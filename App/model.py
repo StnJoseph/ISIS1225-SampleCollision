@@ -27,9 +27,7 @@
 
 import time
 import os
-import psutil
 import tracemalloc
-import gc
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
@@ -301,7 +299,7 @@ def getBooksByYear(catalog, year):
 
 def sortBooksByYear(catalog, year, fraction, rank):
     """
-    retorna una fraccion de la lista de un año ordenada por rating ascendentemente
+    retorna una parte de la lista de videos del año ordenada por rating
     """
     # inicializa el processo para medir memoria
     tracemalloc.start()
@@ -317,7 +315,7 @@ def sortBooksByYear(catalog, year, fraction, rank):
         # recuperar la lista de libros
         books_year = me.getValue(year_mp)["books"]
 
-        # ajustar el tamaño de la muestra segun la fraccion del total de elementos en la lista
+        # ajustar la muestra segun la fraccion de elementos en la lista
         total_books = lt.size(books_year)
         sample = int(total_books*fraction)
         print("Total books in " + str(year) + ":" + str(total_books))
@@ -342,6 +340,7 @@ def sortBooksByYear(catalog, year, fraction, rank):
         return ranked_list, delta_time, delta_memory
     return None, -1.0, -1.0
 
+
 def getTime():
     """
     devuelve el instante tiempo de procesamiento en milisegundos
@@ -358,7 +357,8 @@ def getMemory():
 
 def deltaMemory(start_memory, stop_memory):
     """
-    calcula la diferencia de la memoria alocada dentro del programa en entre dos instantes de tiempo y devuelve el resultado en bytes (ej.: 2100.0 B)
+    calcula la diferencia en memoria alocada del programa entre dos
+    instantes de tiempo y devuelve el resultado en bytes (ej.: 2100.0 B)
     """
     memory_diff = stop_memory.compare_to(start_memory, "filename")
     delta_memory = 0.0
@@ -370,7 +370,8 @@ def deltaMemory(start_memory, stop_memory):
 
 def compareratings(book1, book2):
     """
-    compara el puntaje promedio de dos libros, devuelve verdadero si el primero es mayor que el segundo
+    compara el puntaje promedio de dos libros, devuelve verdadero si
+    el primero es mayor que el segundo
     """
     return float(book1['average_rating']) > float(book2['average_rating'])
 
