@@ -53,31 +53,9 @@ def loadData(catalog):
     """
     # TODO: modificaciones para medir tiempo y memoria usados
 
-    # inicializa el processo para medir memoria
-    tracemalloc.start()
-    delta_time = -1.0
-    delta_memory = -1.0
-
-    # toma de tiempo y memoria al inicio del proceso
-    start_time = getTime()
-    start_memory = getMemory()
-
     loadBooks(catalog)
     loadTags(catalog)
     loadBooksTags(catalog)
-
-    # toma de tiempo y memoria al final del proceso
-    stop_time = getTime()
-    stop_memory = getMemory()
-
-    # finaliza el procesos para medir memoria
-    tracemalloc.stop()
-
-    # calculando la diferencia de tiempo y memoria
-    delta_time = stop_time - start_time
-    delta_memory = deltaMemory(start_memory, stop_memory)
-
-    return delta_time, delta_memory
 
 
 def loadBooks(catalog):
@@ -175,31 +153,8 @@ def getBooksYear(catalog, year):
     en un año
     """
     # TODO: modificaciones para medir tiempo y memoria usados
-
-    # inicializa el processo para medir memoria
-    tracemalloc.start()
-    books = None
-    delta_time = -1.0
-    delta_memory = -1.0
-
-    # toma de tiempo y memoria al inicio del proceso
-    start_time = getTime()
-    start_memory = getMemory()
-
     books = model.getBooksByYear(catalog, year)
-
-    # toma de tiempo y memoria al final del proceso
-    stop_time = getTime()
-    stop_memory = getMemory()
-
-    # finaliza el procesos para medir memoria
-    tracemalloc.stop()
-
-    # calculando la diferencia de tiempo y memoria
-    delta_time = stop_time - start_time
-    delta_memory = deltaMemory(start_memory, stop_memory)
-
-    return books, delta_time, delta_memory
+    return books
 
 
 def sortBooksByYear(catalog, year, fraction, rank):

@@ -289,7 +289,6 @@ def getBooksByYear(catalog, year):
     """
     Retorna los libros publicados en un año
     """
-    # TODO: modificaciones para medir tiempo y memoria usados
     year = mp.get(catalog['years'], year)
     if year:
         return me.getValue(year)['books']
