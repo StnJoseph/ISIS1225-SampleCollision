@@ -41,8 +41,9 @@ def initCatalog():
     catalog = model.newCatalog()
     return catalog
 
-
+# ======================================
 # Funciones para la carga de datos
+# ======================================
 
 
 def loadData(catalog):
@@ -110,8 +111,9 @@ def loadBooksTags(catalog):
     for booktag in input_file:
         model.addBookTag(catalog, booktag)
 
-
+# ======================================
 # Funciones de consulta sobre el catálogo
+# ======================================
 
 
 def getBestBooks(catalog, number):
@@ -208,9 +210,9 @@ def sortBooksByYear(catalog, year, fraction, rank):
     return ranked_books, delta_time, delta_memory
 
 
-# =================================================
-# Funciones para mediciones de tiempo y memoria
-# =================================================
+# ======================================
+# Funciones para medir tiempo y memoria
+# ======================================
 
 
 def getTime():

@@ -34,8 +34,9 @@ se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
 
-
-# Funciones para la impresión de resultados
+# ===================================
+# Funciones para imprimir resultados
+# ===================================
 
 
 def printAuthorData(author):
@@ -96,8 +97,10 @@ def printBestBooks(books):
     else:
         print('No se encontraron libros.\n')
 
-
+# ===================================
 # Menu de opciones
+# ===================================
+
 
 def printMenu():
     print("Bienvenido")
@@ -109,8 +112,10 @@ def printMenu():
     print("6- Ordenar mejores libros de un año")
     print("0- Salir")
 
-
+# ===================================
 # Funciones de inicializacion
+# ===================================
+
 
 def initCatalog():
     """
@@ -127,7 +132,9 @@ def loadData(catalog):
 
 
 cont = None
+# ===================================
 # Menu principal
+# ===================================
 
 while True:
     printMenu()

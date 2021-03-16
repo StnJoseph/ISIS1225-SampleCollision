@@ -38,7 +38,9 @@ El catálogo tendrá tres listas, una para libros, otra para autores
 y otra para géneros
 """
 
+# ==============================
 # Construccion de modelos
+# ==============================
 
 
 def newCatalog():
@@ -115,8 +117,10 @@ def newCatalog():
 
     return catalog
 
+# ==============================
+# Funciones para crear datos
+# ==============================
 
-# Funciones para creacion de datos
 
 def newAuthor(name):
     """
@@ -255,10 +259,10 @@ def addBookTag(catalog, tag):
         if book:
             lt.addLast(tagbook['value']['books'], book['value'])
 
-
 # ==============================
 # Funciones de consulta
 # ==============================
+
 
 def getBooksByAuthor(catalog, authorname):
     """
@@ -297,17 +301,18 @@ def sortBooksByYear(catalog, year, fraction, rank):
     retorna una fraccion de la lista de videos del año ordenada por rating
     """
     # recuperar libros en el año apropiado
+    ranked_list = None
     year_mp = mp.get(catalog['years'], year)
-    if year_mp:
 
+    if year_mp:
         # recuperar la lista de libros
         books_year = me.getValue(year_mp)["books"]
 
         # ajustar la muestra segun la fraccion de elementos en la lista
         total_books = lt.size(books_year)
         sample = int(total_books*fraction)
-        print("Total books in " + str(year) + ":" + str(total_books))
-        print("Books sample size: ", str(sample))
+        print("Total de libros en " + str(year) + ": " + str(total_books))
+        print("Muestra de libros: " + str(sample))
 
         # ordenando la sublista
         sub_list = lt.subList(books_year, 1, sample)
@@ -344,7 +349,6 @@ def tagsSize(catalog):
     Numero de tags en el catalogo
     """
     return mp.size(catalog['tags'])
-
 
 # ==============================
 # Funciones de Comparacion
