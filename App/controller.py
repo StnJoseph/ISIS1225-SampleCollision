@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
-# TODO: modificaciones importar librerias
+# TODO: modificaciones para importar librerias
 import time
 import tracemalloc
 import config as cf
@@ -162,11 +162,13 @@ def sortBooksByYear(catalog, year, fraction, rank):
     Retorna los libros que fueron publicados
     en un año ordenados por rating
     """
-    # inicializa el processo para medir memoria
-    tracemalloc.start()
+    # respuesta por defecto
     books = None
     delta_time = -1.0
     delta_memory = -1.0
+
+    # inicializa el processo para medir memoria
+    tracemalloc.start()
 
     # toma de tiempo y memoria al inicio del proceso
     start_time = getTime()
@@ -183,7 +185,6 @@ def sortBooksByYear(catalog, year, fraction, rank):
 
     # calculando la diferencia de tiempo y memoria
     delta_time = stop_time - start_time
-    delta_time = round(delta_time, 3)
     delta_memory = deltaMemory(start_memory, stop_memory)
 
     return books, delta_time, delta_memory

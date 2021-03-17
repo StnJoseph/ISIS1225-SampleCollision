@@ -177,8 +177,8 @@ while True:
         rank = int(rank)
         answer = controller.sortBooksByYear(cont, number, fraction, rank)
         printBestBooks(answer[0])
-        print("Time [ms]: ", f"{answer[1]:.4f}",
-              "Memory [Byte]: ", f"{answer[2]:.2f}")
+        print("Tiempo [ms]: ", f"{answer[1]:.4f}",
+              "Memoria [Byte]: ", f"{answer[2]:.2f}")
 
     else:
         sys.exit(0),
