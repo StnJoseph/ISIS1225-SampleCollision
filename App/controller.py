@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
-# TODO: modificaciones para importar librerias
+# TODO: importaciones para medir tiempo y memoria
 import time
 import tracemalloc
 import config as cf
@@ -51,11 +51,26 @@ def loadData(catalog):
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
     """
-    # TODO: modificaciones para medir tiempo y memoria usados
+    # TODO: modificaciones para medir el tiempo y la memoria
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
 
     loadBooks(catalog)
     loadTags(catalog)
     loadBooksTags(catalog)
+
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
+
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+
+    return delta_time, delta_memory
 
 
 def loadBooks(catalog):
@@ -152,9 +167,25 @@ def getBooksYear(catalog, year):
     Retorna los libros que fueron publicados
     en un año
     """
-    # TODO: modificaciones para medir tiempo y memoria usados
+    # TODO: modificaciones para medir el tiempo y la memoria
+    books = None
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
+
     books = model.getBooksByYear(catalog, year)
-    return books
+
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
+
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+
+    return books, delta_time, delta_memory
 
 
 def sortBooksByYear(catalog, year, fraction, rank):
@@ -177,8 +208,8 @@ def sortBooksByYear(catalog, year, fraction, rank):
     books = model.sortBooksByYear(catalog, year, fraction, rank)
 
     # toma de tiempo y memoria al final del proceso
-    stop_time = getTime()
     stop_memory = getMemory()
+    stop_time = getTime()
 
     # finaliza el procesos para medir memoria
     tracemalloc.stop()
@@ -216,6 +247,9 @@ def deltaMemory(start_memory, stop_memory):
     memory_diff = stop_memory.compare_to(start_memory, "filename")
     delta_memory = 0.0
 
+    # suma de la diferencia de memoria
     for stat in memory_diff:
-        delta_memory = delta_memory + stat.size
+        delta_memory = delta_memory + stat.size_diff
+    # de Byte -> kByte
+    delta_memory = delta_memory/1024.0
     return delta_memory

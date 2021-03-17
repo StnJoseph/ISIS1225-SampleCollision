@@ -299,6 +299,7 @@ def sortBooksByYear(catalog, year, fraction, rank):
     """
     retorna una fraccion de la lista de videos del año ordenada por rating
     """
+    # TODO: ordennamiento utilizando maps y list
     # recuperar libros en el año apropiado
     ranked_list = None
     year_mp = mp.get(catalog['years'], year)

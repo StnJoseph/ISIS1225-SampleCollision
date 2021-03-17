@@ -145,18 +145,22 @@ while True:
         cont = controller.initCatalog()
 
     elif int(inputs[0]) == 2:
-        # TODO: modificaciones para observar las medidas de memoria y tiempo
+        # TODO: modificaciones para observar el tiempo y la memoria
         print("Cargando información de los archivos ....")
-        controller.loadData(cont)
+        answer = controller.loadData(cont)
         print('Libros cargados: ' + str(controller.booksSize(cont)))
         print('Autores cargados: ' + str(controller.authorsSize(cont)))
         print('Géneros cargados: ' + str(controller.tagsSize(cont)))
+        print("Tiempo [ms]: ", f"{answer[0]:.3f}",
+              "Memoria [kB]: ", f"{answer[1]:.3f}")
 
     elif int(inputs[0]) == 3:
-        # TODO: modificaciones para observar las medidas de memoria y tiempo
+        # TODO: modificaciones para observar el tiempo y la memoria
         number = input("Buscando libros del año?: ")
-        books = controller.getBooksYear(cont, int(number))
-        printBooksbyYear(books)
+        answer = controller.getBooksYear(cont, int(number))
+        printBooksbyYear(answer[0])
+        print("Tiempo [ms]: ", f"{answer[1]:.3f}",
+              "Memoria [kB]: ", f"{answer[2]:.3f}")
 
     elif int(inputs[0]) == 4:
         authorname = input("Nombre del autor a buscar: ")
@@ -177,8 +181,8 @@ while True:
         rank = int(rank)
         answer = controller.sortBooksByYear(cont, number, fraction, rank)
         printBestBooks(answer[0])
-        print("Tiempo [ms]: ", f"{answer[1]:.4f}",
-              "Memoria [Byte]: ", f"{answer[2]:.2f}")
+        print("Tiempo [ms]: ", f"{answer[1]:.3f}", "||\t", 
+              "Memoria [kB]: ", f"{answer[2]:.3f}")
 
     else:
         sys.exit(0),
