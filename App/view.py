@@ -151,7 +151,7 @@ while True:
         print('Libros cargados: ' + str(controller.booksSize(cont)))
         print('Autores cargados: ' + str(controller.authorsSize(cont)))
         print('Géneros cargados: ' + str(controller.tagsSize(cont)))
-        print("Tiempo [ms]: ", f"{answer[0]:.3f}",
+        print("Tiempo [ms]: ", f"{answer[0]:.3f}", "\t||\t",
               "Memoria [kB]: ", f"{answer[1]:.3f}")
 
     elif int(inputs[0]) == 3:
@@ -159,7 +159,7 @@ while True:
         number = input("Buscando libros del año?: ")
         answer = controller.getBooksYear(cont, int(number))
         printBooksbyYear(answer[0])
-        print("Tiempo [ms]: ", f"{answer[1]:.3f}",
+        print("Tiempo [ms]: ", f"{answer[1]:.3f}", "\t||\t",
               "Memoria [kB]: ", f"{answer[2]:.3f}")
 
     elif int(inputs[0]) == 4:
@@ -181,7 +181,7 @@ while True:
         rank = int(rank)
         answer = controller.sortBooksByYear(cont, number, fraction, rank)
         printBestBooks(answer[0])
-        print("Tiempo [ms]: ", f"{answer[1]:.3f}", "||\t", 
+        print("Tiempo [ms]: ", f"{answer[1]:.3f}", "\t||\t",
               "Memoria [kB]: ", f"{answer[2]:.3f}")
 
     else:
