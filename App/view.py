@@ -145,21 +145,21 @@ while True:
         cont = controller.initCatalog()
 
     elif int(inputs[0]) == 2:
-        # TODO: modificaciones para observar el tiempo y la memoria
+        # TODO: modificaciones para observar el tiempo y memoria
         print("Cargando información de los archivos ....")
         answer = controller.loadData(cont)
         print('Libros cargados: ' + str(controller.booksSize(cont)))
         print('Autores cargados: ' + str(controller.authorsSize(cont)))
         print('Géneros cargados: ' + str(controller.tagsSize(cont)))
-        print("Tiempo [ms]: ", f"{answer[0]:.3f}", "\t||\t",
+        print("Tiempo [ms]: ", f"{answer[0]:.3f}", "  ||  ",
               "Memoria [kB]: ", f"{answer[1]:.3f}")
 
     elif int(inputs[0]) == 3:
-        # TODO: modificaciones para observar el tiempo y la memoria
+        # TODO: modificaciones para observar el tiempo y memoria
         number = input("Buscando libros del año?: ")
         answer = controller.getBooksYear(cont, int(number))
         printBooksbyYear(answer[0])
-        print("Tiempo [ms]: ", f"{answer[1]:.3f}", "\t||\t",
+        print("Tiempo [ms]: ", f"{answer[1]:.3f}", "  ||  ",
               "Memoria [kB]: ", f"{answer[2]:.3f}")
 
     elif int(inputs[0]) == 4:
@@ -173,6 +173,7 @@ while True:
         printBooksbyTag(books)
 
     elif int(inputs[0]) == 6:
+        # TODO: modificaciones para observar el tiempo y memoria
         number = input("Buscando libros del año?: ")
         fraction = input("Fraccion de libros en el año? (entre 0.0 y 1.0): ")
         rank = input("Cuantos libros en el escalafon? (mayor a 0): ")
@@ -181,7 +182,7 @@ while True:
         rank = int(rank)
         answer = controller.sortBooksByYear(cont, number, fraction, rank)
         printBestBooks(answer[0])
-        print("Tiempo [ms]: ", f"{answer[1]:.3f}", "\t||\t",
+        print("Tiempo [ms]: ", f"{answer[1]:.3f}", "  ||  ",
               "Memoria [kB]: ", f"{answer[2]:.3f}")
 
     else:

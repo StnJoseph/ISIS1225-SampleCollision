@@ -51,7 +51,7 @@ def loadData(catalog):
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
     """
-    # TODO: modificaciones para medir el tiempo y la memoria
+    # TODO: modificaciones para medir el tiempo y memoria
     delta_time = -1.0
     delta_memory = -1.0
 
@@ -167,7 +167,7 @@ def getBooksYear(catalog, year):
     Retorna los libros que fueron publicados
     en un año
     """
-    # TODO: modificaciones para medir el tiempo y la memoria
+    # TODO: modificaciones para medir el tiempo y memoria
     books = None
     delta_time = -1.0
     delta_memory = -1.0
@@ -193,6 +193,7 @@ def sortBooksByYear(catalog, year, fraction, rank):
     Retorna los libros que fueron publicados
     en un año ordenados por rating
     """
+    # TODO: modificaciones para medir el tiempo y memoria
     # respuesta por defecto
     books = None
     delta_time = -1.0
@@ -247,7 +248,7 @@ def deltaMemory(start_memory, stop_memory):
     memory_diff = stop_memory.compare_to(start_memory, "filename")
     delta_memory = 0.0
 
-    # suma de la diferencia de memoria
+    # suma de las diferencias en uso de memoria
     for stat in memory_diff:
         delta_memory = delta_memory + stat.size_diff
     # de Byte -> kByte
