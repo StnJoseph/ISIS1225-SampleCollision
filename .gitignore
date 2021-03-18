@@ -138,4 +138,5 @@ dmypy.json
 .vim
 
 .DS_Store
+.vscode
 .vscode/settings.json
