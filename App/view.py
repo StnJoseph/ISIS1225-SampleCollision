@@ -184,12 +184,10 @@ while True:
 
     elif int(inputs[0]) == 6:
         number = input("Buscando libros del año?: ")
-        fraction = input("Fraccion de libros en el año? (entre 0.0 y 1.0): ")
         rank = input("Cuantos libros en el escalafon? (mayor a 0): ")
         number = int(number)
-        fraction = float(fraction)
         rank = int(rank)
-        answer = controller.sortBooksByYear(ctrlr, number, fraction, rank)
+        answer = controller.sortBooksByYear(ctrlr, number, rank)
         # TODO completar cambios para el laboratorio 7
         printBestBooks(answer)
 
