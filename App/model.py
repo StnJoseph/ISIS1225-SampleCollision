@@ -83,7 +83,7 @@ def newCatalog():
     """
     catalog['bookIds'] = mp.newMap(10000,
                                    maptype='CHAINING',
-                                   loadfactor=4.0,
+                                   loadfactor=4,
                                    comparefunction=compareMapBookIds)
 
     """
@@ -91,7 +91,7 @@ def newCatalog():
     """
     catalog['authors'] = mp.newMap(800,
                                    maptype='CHAINING',
-                                   loadfactor=4.0,
+                                   loadfactor=4,
                                    comparefunction=compareAuthorsByName)
     """
     Este indice crea un map cuya llave es la etiqueta
@@ -104,8 +104,8 @@ def newCatalog():
     Este indice crea un map cuya llave es el Id de la etiqueta
     """
     catalog['tagIds'] = mp.newMap(34500,
-                                  maptype='CHAINING',
-                                  loadfactor=4.0,
+                                  maptype='PROBING',
+                                  loadfactor=0.5,
                                   comparefunction=compareTagIds)
     """
     Este indice crea un map cuya llave es el año de publicacion
@@ -117,9 +117,7 @@ def newCatalog():
 
     return catalog
 
-# ==============================
-# Funciones para crear datos
-# ==============================
+# Funciones para creacion de datos
 
 
 def newAuthor(name):
@@ -155,6 +153,7 @@ def newBookTag(name, id):
 
 
 # Funciones para agregar informacion al catalogo
+
 
 def addBook(catalog, book):
     """
@@ -259,6 +258,7 @@ def addBookTag(catalog, tag):
         if book:
             lt.addLast(tagbook['value']['books'], book['value'])
 
+
 # ==============================
 # Funciones de consulta
 # ==============================
@@ -299,7 +299,7 @@ def sortBooksByYear(catalog, year, fraction, rank):
     """
     retorna una fraccion de la lista de videos del año ordenada por rating
     """
-    # TODO: ordenamiento utilizando TAD maps y list
+    # TODO: ordenamiento utilizando TAD maps y TAD list
     # recuperar libros en el año apropiado
     ranked_list = None
     year_mp = mp.get(catalog['years'], year)
