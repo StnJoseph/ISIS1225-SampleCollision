@@ -52,7 +52,10 @@ def loadData(ctrlr):
     estructura de datos
     """
     # TODO: modificaciones para medir el tiempo y memoria
+    # inicializa el proceso para medir memoria
     tracemalloc.start()
+
+    # toma de tiempo y memoria al inicio del proceso
     start_time = getTime()
     start_memory = getMemory()
 
@@ -60,10 +63,13 @@ def loadData(ctrlr):
     loadTags(ctrlr)
     loadBooksTags(ctrlr)
 
+    # toma de tiempo y memoria al final del proceso
     stop_memory = getMemory()
     stop_time = getTime()
+    # finaliza el proceso para medir memoria
     tracemalloc.stop()
 
+    # calculando la diferencia de tiempo y memoria
     delta_time = deltaTime(stop_time, start_time)
     delta_memory = deltaMemory(stop_memory, start_memory)
 
@@ -181,7 +187,7 @@ def getBooksYear(ctrlr, year):
     return books, delta_time, delta_memory
 
 
-def sortBooksByYear(ctrlr, year, fraction, rank):
+def sortBooksByYear(ctrlr, year, rank):
     """
     Retorna los libros que fueron publicados
     en un año ordenados por rating
@@ -189,27 +195,7 @@ def sortBooksByYear(ctrlr, year, fraction, rank):
     # TODO completar cambios para el laboratorio 7
     # respuesta por defecto
     books = None
-    # inicializa el processo para medir memoria
-    # tracemalloc.start()
-
-    # toma de tiempo y memoria al inicio del proceso
-    # start_time = getTime()
-    # start_memory = getMemory()
-
-    books = model.sortBooksByYear(ctrlr['model'], year, fraction, rank)
-
-    # toma de tiempo y memoria al final del proceso
-    # stop_memory = getMemory()
-    # stop_time = getTime()
-
-    # finaliza el procesos para medir memoria
-    # tracemalloc.stop()
-
-    # calculando la diferencia de tiempo y memoria
-    # delta_time = deltaTime(stop_time, start_time)
-    # delta_memory = deltaMemory(stop_memory, start_memory)
-
-    # return books, delta_time, delta_memory
+    books = model.sortBooksByYear(ctrlr['model'], year, rank)
     return books
 
 

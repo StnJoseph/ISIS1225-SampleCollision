@@ -183,7 +183,6 @@ while True:
         printBooksbyTag(books)
 
     elif int(inputs[0]) == 6:
-        # TODO completar cambios para el laboratorio 7
         number = input("Buscando libros del año?: ")
         fraction = input("Fraccion de libros en el año? (entre 0.0 y 1.0): ")
         rank = input("Cuantos libros en el escalafon? (mayor a 0): ")
@@ -191,10 +190,8 @@ while True:
         fraction = float(fraction)
         rank = int(rank)
         answer = controller.sortBooksByYear(ctrlr, number, fraction, rank)
+        # TODO completar cambios para el laboratorio 7
         printBestBooks(answer)
-        # printBestBooks(answer[0])
-        # print("Tiempo [ms]: ", f"{answer[1]:.3f}", "||",
-        #       "Memoria [kB]: ", f"{answer[2]:.3f}")
 
     elif int(inputs[0]) == 0:
         break
