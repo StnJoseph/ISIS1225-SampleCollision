@@ -295,7 +295,7 @@ def getBooksByYear(catalog, year):
     return None
 
 
-def sortBooksByYear(catalog, year, fraction, rank):
+def sortBooksByYear(catalog, year, rank):
     """
     retorna una fraccion de la lista de videos del año ordenada por rating
     """
@@ -310,13 +310,10 @@ def sortBooksByYear(catalog, year, fraction, rank):
 
         # ajustar la muestra segun la fraccion de elementos en la lista
         total_books = lt.size(books_year)
-        sample = int(total_books*fraction)
         print("Total de libros en " + str(year) + ": " + str(total_books))
-        print("Muestra de libros: " + str(sample))
 
-        # ordenando la sublista
-        sub_list = lt.subList(books_year, 1, sample)
-        sorted_list = sa.sort(sub_list, compareratings)
+        # ordenando la lista
+        sorted_list = sa.sort(books_year, compareratings)
         ranked_list = lt.subList(sorted_list, 1, rank)
 
     return ranked_list

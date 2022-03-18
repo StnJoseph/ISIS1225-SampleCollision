@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
-# TODO: importaciones para medir tiempo y memoria
+# TODO: import para medir tiempo y memoria
 import time
 import tracemalloc
 import config as cf
@@ -52,9 +52,6 @@ def loadData(ctrlr):
     estructura de datos
     """
     # TODO: modificaciones para medir el tiempo y memoria
-    delta_time = -1.0
-    delta_memory = -1.0
-
     tracemalloc.start()
     start_time = getTime()
     start_memory = getMemory()
@@ -67,8 +64,8 @@ def loadData(ctrlr):
     stop_time = getTime()
     tracemalloc.stop()
 
-    delta_time = stop_time - start_time
-    delta_memory = deltaMemory(start_memory, stop_memory)
+    delta_time = deltaTime(stop_time, start_time)
+    delta_memory = deltaMemory(stop_memory, start_memory)
 
     return delta_time, delta_memory
 
@@ -168,9 +165,6 @@ def getBooksYear(ctrlr, year):
     """
     # TODO: modificaciones para medir el tiempo y memoria
     books = None
-    delta_time = -1.0
-    delta_memory = -1.0
-
     tracemalloc.start()
     start_time = getTime()
     start_memory = getMemory()
@@ -181,8 +175,8 @@ def getBooksYear(ctrlr, year):
     stop_time = getTime()
     tracemalloc.stop()
 
-    delta_time = stop_time - start_time
-    delta_memory = deltaMemory(start_memory, stop_memory)
+    delta_time = deltaTime(stop_time, start_time)
+    delta_memory = deltaMemory(stop_memory, start_memory)
 
     return books, delta_time, delta_memory
 
@@ -192,12 +186,9 @@ def sortBooksByYear(ctrlr, year, fraction, rank):
     Retorna los libros que fueron publicados
     en un año ordenados por rating
     """
-    # TODO completar cambios laboratorio 7
+    # TODO completar cambios para el laboratorio 7
     # respuesta por defecto
     books = None
-    # delta_time = -1.0
-    # delta_memory = -1.0
-
     # inicializa el processo para medir memoria
     # tracemalloc.start()
 
@@ -215,14 +206,14 @@ def sortBooksByYear(ctrlr, year, fraction, rank):
     # tracemalloc.stop()
 
     # calculando la diferencia de tiempo y memoria
-    # delta_time = stop_time - start_time
-    # delta_memory = deltaMemory(start_memory, stop_memory)
+    # delta_time = deltaTime(stop_time, start_time)
+    # delta_memory = deltaMemory(stop_memory, start_memory)
 
     # return books, delta_time, delta_memory
     return books
 
 
-# Funciones para medir tiempo y memoria
+# Funciones para medir tiempos de ejecucion
 
 
 def getTime():
@@ -232,6 +223,17 @@ def getTime():
     return float(time.perf_counter()*1000)
 
 
+def deltaTime(end, start):
+    """
+    devuelve la diferencia entre tiempos de procesamiento muestreados
+    """
+    elapsed = float(end - start)
+    return elapsed
+
+
+# Funciones para medir la memoria utilizada
+
+
 def getMemory():
     """
     toma una muestra de la memoria alocada en instante de tiempo
@@ -239,7 +241,7 @@ def getMemory():
     return tracemalloc.take_snapshot()
 
 
-def deltaMemory(start_memory, stop_memory):
+def deltaMemory(stop_memory, start_memory):
     """
     calcula la diferencia en memoria alocada del programa entre dos
     instantes de tiempo y devuelve el resultado en bytes (ej.: 2100.0 B)
