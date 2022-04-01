@@ -294,12 +294,10 @@ def getBooksByYear(catalog, year):
         return me.getValue(year)['books']
     return None
 
-
-def sortBooksByYear(catalog, year, rank):
+def sortBooksByYear(catalog, year, fraction, rank):
     """
     retorna una fraccion de la lista de videos del año ordenada por rating
     """
-    # TODO: ordenamiento utilizando TAD maps y TAD list
     # recuperar libros en el año apropiado
     ranked_list = None
     year_mp = mp.get(catalog['years'], year)
@@ -314,7 +312,8 @@ def sortBooksByYear(catalog, year, rank):
 
         # ordenando la lista
         sorted_list = sa.sort(books_year, compareratings)
-        ranked_list = lt.subList(sorted_list, 1, rank)
+        limit = round(rank*fraction)
+        ranked_list = lt.subList(sorted_list, 1, limit)
 
     return ranked_list
 

@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
-# TODO: import para medir tiempo y memoria
 import time
 import tracemalloc
 import config as cf
@@ -51,7 +50,6 @@ def loadData(ctrlr):
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
     """
-    # TODO: modificaciones para medir el tiempo y memoria
     # inicializa el proceso para medir memoria
     tracemalloc.start()
 
@@ -169,7 +167,6 @@ def getBooksYear(ctrlr, year):
     Retorna los libros que fueron publicados
     en un año
     """
-    # TODO: modificaciones para medir el tiempo y memoria
     books = None
     tracemalloc.start()
     start_time = getTime()
@@ -187,17 +184,31 @@ def getBooksYear(ctrlr, year):
     return books, delta_time, delta_memory
 
 
-def sortBooksByYear(ctrlr, year, rank):
+def sortBooksByYear(ctrlr, year, fraction, rank):
     """
     Retorna los libros que fueron publicados
     en un año ordenados por rating
     """
-    # TODO completar cambios para el laboratorio 7
     # respuesta por defecto
     books = None
-    books = model.sortBooksByYear(ctrlr['model'], year, rank)
-    return books
+    # inicializa el proceso para medir memoria
+    tracemalloc.start()
 
+    # toma de tiempo y memoria al inicio del proceso
+    start_time = getTime()
+    start_memory = getMemory()
+    books = model.sortBooksByYear(ctrlr['model'], year, fraction, rank)
+
+    # toma de tiempo y memoria al final del proceso
+    stop_memory = getMemory()
+    stop_time = getTime()
+    # finaliza el procesos para medir memoria
+    tracemalloc.stop()
+
+    # calculando la diferencia de tiempo y memoria
+    delta_time = deltaTime(stop_time, start_time)
+    delta_memory = deltaMemory(stop_memory, start_memory)
+    return books, delta_time, delta_memory
 
 # Funciones para medir tiempos de ejecucion
 

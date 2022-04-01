@@ -155,7 +155,6 @@ while True:
         ctrlr = newController()
 
     elif int(inputs[0]) == 2:
-        # TODO: modificaciones para observar el tiempo y memoria
         print("Cargando información de los archivos ....")
         answer = controller.loadData(ctrlr)
         print('Libros cargados: ' + str(controller.booksSize(ctrlr)))
@@ -163,9 +162,10 @@ while True:
         print('Géneros cargados: ' + str(controller.tagsSize(ctrlr)))
         print("Tiempo [ms]: ", f"{answer[0]:.3f}", "||",
               "Memoria [kB]: ", f"{answer[1]:.3f}")
+        print()
+        #print(ctrlr['model']["books"])
 
     elif int(inputs[0]) == 3:
-        # TODO: modificaciones para observar el tiempo y memoria
         number = input("Buscando libros del año?: ")
         answer = controller.getBooksYear(ctrlr, int(number))
         printBooksbyYear(answer[0])
@@ -183,13 +183,14 @@ while True:
         printBooksbyTag(books)
 
     elif int(inputs[0]) == 6:
-        number = input("Buscando libros del año?: ")
-        rank = input("Cuantos libros en el escalafon? (mayor a 0): ")
-        number = int(number)
-        rank = int(rank)
-        answer = controller.sortBooksByYear(ctrlr, number, rank)
-        # TODO completar cambios para el laboratorio 7
-        printBestBooks(answer)
+        number = int(input("Buscando libros del año?: "))
+        fraction = float(input("Fraccion de libros en el año? (entre 0.0 y 1.0): "))
+        rank = int(input("Cuantos libros en el escalafon? (mayor a 0): "))
+        answer = controller.sortBooksByYear(ctrlr, number, fraction, rank)
+        
+        printBestBooks(answer[0])
+        print("Tiempo [ms]: ", f"{answer[1]:.3f}", "||",
+         "Memoria [kB]: ", f"{answer[2]:.3f}")
 
     elif int(inputs[0]) == 0:
         break
